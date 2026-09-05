@@ -1,0 +1,6 @@
+{
+  "name": "CLOUDShoeCo. Inv. Checker",
+  "description": "Store manager inventory checking and stock reorder tool for Bugis, Jewel, and Takashimaya stores.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
