@@ -1,3 +1,5 @@
+STUDENT NAME : RIZWAN KHAN
+
 Q1 : Who are your users, and what changes for them?
 ```
 The USER is Store Managers, three of them. these are internal and they are using a INVENTORY TRACKER APP for their company to check and ORDER stocks and contact each other. 
