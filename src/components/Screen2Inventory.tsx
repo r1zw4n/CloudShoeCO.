@@ -14,6 +14,7 @@ import {
 interface Screen2InventoryProps {
   inventory: InventoryItem[];
   selectedStore: StoreLocation;
+  isAllStores?: boolean;
   onToggleOrder: (itemId: string) => void;
   onResetOrders?: () => void;
   initialModelFilter?: ShoeModelId | 'ALL';
@@ -22,6 +23,7 @@ interface Screen2InventoryProps {
 export const Screen2Inventory: React.FC<Screen2InventoryProps> = ({
   inventory,
   selectedStore,
+  isAllStores = false,
   onToggleOrder,
   initialModelFilter = 'ALL',
 }) => {
@@ -32,8 +34,8 @@ export const Screen2Inventory: React.FC<Screen2InventoryProps> = ({
   // Filter items based on active store, model, size, and status
   const filteredItems = useMemo(() => {
     return inventory.filter((item) => {
-      // Must match active store
-      if (item.store !== selectedStore) return false;
+      // Must match active store unless in ALL STORES mode
+      if (!isAllStores && item.store !== selectedStore) return false;
 
       // Filter by model
       if (modelFilter !== 'ALL' && item.model !== modelFilter) return false;
@@ -51,12 +53,14 @@ export const Screen2Inventory: React.FC<Screen2InventoryProps> = ({
 
       return true;
     });
-  }, [inventory, selectedStore, modelFilter, sizeFilter, stockStatusFilter]);
+  }, [inventory, selectedStore, isAllStores, modelFilter, sizeFilter, stockStatusFilter]);
 
-  // Statistics for the current store
+  // Statistics for the current store or all stores combined
   const storeItems = useMemo(() => {
-    return inventory.filter((item) => item.store === selectedStore);
-  }, [inventory, selectedStore]);
+    return isAllStores
+      ? inventory
+      : inventory.filter((item) => item.store === selectedStore);
+  }, [inventory, selectedStore, isAllStores]);
 
   const stats = useMemo(() => {
     let greenCount = 0; // > 5
@@ -129,7 +133,10 @@ export const Screen2Inventory: React.FC<Screen2InventoryProps> = ({
               Inventory Matrix
             </h2>
             <p className="mt-1 text-xs sm:text-sm text-[#888]">
-              Real-time stock availability for <span className="text-white underline underline-offset-4">{selectedStore} Store</span>
+              Real-time stock availability for{' '}
+              <span className="text-white underline underline-offset-4">
+                {isAllStores ? 'All 3 Stores' : `${selectedStore} Store`}
+              </span>
             </p>
           </div>
 
@@ -350,6 +357,11 @@ export const Screen2Inventory: React.FC<Screen2InventoryProps> = ({
                     <span className="text-sm font-semibold text-[#e0e0e0]">
                       {item.model}
                     </span>
+                    {isAllStores && (
+                      <span className="rounded border border-amber-500/40 bg-amber-500/10 px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider text-amber-300">
+                        {item.store} Store
+                      </span>
+                    )}
                     <span className="rounded border border-[#333] bg-[#161616] px-2 py-0.5 text-[10px] uppercase tracking-wider text-[#888]">
                       {shoeMeta?.category}
                     </span>

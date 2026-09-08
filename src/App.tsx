@@ -12,6 +12,9 @@ export default function App() {
   // Active store manager's location: Bugis, Jewel, or Takashimaya
   const [selectedStore, setSelectedStore] = useState<StoreLocation>('Bugis');
 
+  // Multi-store management mode: manage all three stores together
+  const [isAllStores, setIsAllStores] = useState<boolean>(false);
+
   // Master inventory state initialized from single data file
   const [inventory, setInventory] = useState<InventoryItem[]>(INITIAL_INVENTORY_ITEMS);
 
@@ -45,9 +48,19 @@ export default function App() {
     setCurrentScreen(2);
   };
 
-  // Count low stock items (< 5 units) in the currently selected store
+  const handleSelectStore = (store: StoreLocation) => {
+    setSelectedStore(store);
+    setIsAllStores(false);
+  };
+
+  const handleToggleAllStores = () => {
+    setIsAllStores((prev) => !prev);
+    setCurrentScreen(2);
+  };
+
+  // Count low stock items (< 5 units) in the currently selected store or across all stores
   const lowStockCount = inventory.filter(
-    (item) => item.store === selectedStore && item.stock < 5
+    (item) => (isAllStores ? true : item.store === selectedStore) && item.stock < 5
   ).length;
 
   return (
@@ -57,8 +70,10 @@ export default function App() {
         currentScreen={currentScreen}
         onSelectScreen={setCurrentScreen}
         selectedStore={selectedStore}
-        onSelectStore={setSelectedStore}
+        onSelectStore={handleSelectStore}
         lowStockCount={lowStockCount}
+        isAllStores={isAllStores}
+        onToggleAllStores={handleToggleAllStores}
       />
 
       {/* Main Screen Content Area */}
@@ -69,6 +84,7 @@ export default function App() {
           <Screen2Inventory
             inventory={inventory}
             selectedStore={selectedStore}
+            isAllStores={isAllStores}
             onToggleOrder={handleToggleOrder}
             initialModelFilter={modelFilterForScreen2}
           />
@@ -86,18 +102,37 @@ export default function App() {
                 : 'bg-[#161616] text-[#888] border border-[#262626]'
             }`}
           >
-            Screen 1: Shoes
+            Manager Overview
           </button>
-          <button
+          <div
             onClick={() => setCurrentScreen(2)}
-            className={`flex-1 py-2 text-xs font-semibold rounded-lg text-center uppercase tracking-wider transition-colors ${
+            className={`flex-1 py-2 px-2 text-xs font-semibold rounded-lg text-center uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 cursor-pointer ${
               currentScreen === 2
                 ? 'bg-white text-black'
                 : 'bg-[#161616] text-[#888] border border-[#262626]'
             }`}
           >
-            Screen 2: Stocks ({lowStockCount} low)
-          </button>
+            <span>Stocks & Orders</span>
+            {lowStockCount > 0 && (
+              <span className="text-[10px]">({lowStockCount} low)</span>
+            )}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleToggleAllStores();
+              }}
+              className={`ml-1 px-1.5 py-0.5 text-[9px] font-black rounded uppercase ${
+                isAllStores
+                  ? 'bg-amber-400 text-black border border-amber-300 font-extrabold'
+                  : currentScreen === 2
+                    ? 'bg-[#d8d8d8] text-[#555]'
+                    : 'bg-[#2a2a2a] text-[#888]'
+              }`}
+            >
+              ALL STORES
+            </button>
+          </div>
         </div>
       </div>
     </div>

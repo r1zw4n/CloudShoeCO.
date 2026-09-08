@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <linearGradient id="csco-grad" x1="10" y1="20" x2="90" y2="85" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="50%" stop-color="#F3F4F6" />
+      <stop offset="100%" stop-color="#D1D5DB" />
+    </linearGradient>
+    <linearGradient id="csco-glow" x1="20" y1="65" x2="80" y2="65" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#FCD34D" />
+    </linearGradient>
+  </defs>
+
+  <!-- Stylized Cloud Body & Aerodynamic Silhouette -->
+  <path
+    d="M32 46 C30 36 38 26 50 26 C60 26 68 33 70 42 C78 43 84 50 83 58 C82 66 75 72 66 72 L30 72 C20 72 13 65 14 56 C15 48 22 43 30 44 C30.6 44.7 31.3 45.4 32 46 Z"
+    fill="url(#csco-grad)"
+  />
+
+  <!-- High-velocity negative space slash defining sneaker profile and speed -->
+  <path
+    d="M24 61 C32 60 48 57 58 48 C66 41 72 37 77 34"
+    stroke="#111111"
+    stroke-width="3"
+    stroke-linecap="round"
+  />
+
+  <!-- Sole Cushion Pods (Cloud pods) -->
+  <rect x="26" y="65" width="9" height="11" rx="4.5" fill="#111111" />
+  <rect x="41" y="65" width="10" height="11" rx="5" fill="#111111" />
+  <rect x="57" y="65" width="11" height="11" rx="5.5" fill="#111111" />
+
+  <!-- Dynamic Athletic Swoop / Under-sole Trail -->
+  <path
+    d="M14 75 C25 78 50 79 86 64"
+    stroke="url(#csco-glow)"
+    stroke-width="2.5"
+    stroke-linecap="round"
+  />
+</svg>

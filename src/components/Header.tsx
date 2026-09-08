@@ -9,6 +9,8 @@ interface HeaderProps {
   selectedStore: StoreLocation;
   onSelectStore: (store: StoreLocation) => void;
   lowStockCount: number;
+  isAllStores: boolean;
+  onToggleAllStores: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -17,6 +19,8 @@ export const Header: React.FC<HeaderProps> = ({
   selectedStore,
   onSelectStore,
   lowStockCount,
+  isAllStores,
+  onToggleAllStores,
 }) => {
   const currentManager = STORE_MANAGERS.find((m) => m.store === selectedStore) || STORE_MANAGERS[0];
 
@@ -27,9 +31,12 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#333] bg-[#161616] text-white font-serif italic text-sm font-semibold tracking-wider">
-                CS
-              </div>
+              <img
+                src="/cloudshoe-logo.svg"
+                alt="CloudShoeCO. Logo"
+                className="h-10 w-10 object-contain shrink-0 select-none"
+                referrerPolicy="no-referrer"
+              />
               <div>
                 <h1 className="text-xl sm:text-2xl font-light tracking-widest text-white uppercase italic font-serif">
                   CloudShoeCo.
@@ -44,7 +51,7 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="sm:hidden">
               <span className="inline-flex items-center gap-1.5 rounded-full border border-[#333] bg-[#161616] px-3 py-1 text-xs font-medium text-[#ccc]">
                 <Store className="h-3 w-3 text-[#888]" />
-                {selectedStore}
+                {isAllStores ? 'All Stores' : selectedStore}
               </span>
             </div>
           </div>
@@ -55,7 +62,7 @@ export const Header: React.FC<HeaderProps> = ({
               Store:
             </span>
             {STORES.map((store) => {
-              const isSelected = selectedStore === store;
+              const isSelected = !isAllStores && selectedStore === store;
               return (
                 <button
                   key={store}
@@ -87,30 +94,56 @@ export const Header: React.FC<HeaderProps> = ({
             }`}
           >
             <Layers className="h-4 w-4" />
-            <span>Screen 1: Shoe Models</span>
+            <span>Manager Overview</span>
           </button>
 
-          <button
-            id="nav-screen-2-btn"
+          <div
+            id="nav-screen-2-tab"
             onClick={() => onSelectScreen(2)}
-            className={`flex flex-1 items-center justify-center gap-2 min-h-[44px] rounded-lg px-4 py-2 text-xs sm:text-sm uppercase tracking-wider font-semibold transition-all ${
+            className={`flex flex-1 items-center justify-center gap-2 min-h-[44px] rounded-lg px-3 sm:px-4 py-2 text-xs sm:text-sm uppercase tracking-wider font-semibold transition-all cursor-pointer select-none ${
               currentScreen === 2
                 ? 'bg-white text-black shadow-sm'
                 : 'bg-[#161616] text-[#888] border border-[#262626] hover:text-white hover:border-[#333]'
             }`}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') onSelectScreen(2);
+            }}
           >
-            <ClipboardList className="h-4 w-4" />
-            <span>Screen 2: Stocks & Orders</span>
+            <ClipboardList className="h-4 w-4 shrink-0" />
+            <span className="whitespace-nowrap">Stocks & Orders</span>
             {lowStockCount > 0 && (
-              <span className={`ml-1 rounded-full px-2 py-0.5 text-[10px] font-bold tracking-normal ${
-                currentScreen === 2
-                  ? 'bg-black text-amber-400'
-                  : 'bg-amber-500/20 text-yellow-400 border border-yellow-500/30'
-              }`}>
+              <span
+                className={`ml-1 rounded-full px-2 py-0.5 text-[10px] font-bold tracking-normal shrink-0 ${
+                  currentScreen === 2
+                    ? 'bg-black text-amber-400'
+                    : 'bg-amber-500/20 text-yellow-400 border border-yellow-500/30'
+                }`}
+              >
                 {lowStockCount} low
               </span>
             )}
-          </button>
+            <button
+              type="button"
+              id="btn-all-stores"
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleAllStores();
+                onSelectScreen(2);
+              }}
+              className={`ml-1.5 sm:ml-2 rounded-md px-2 sm:px-2.5 py-1 text-[10px] sm:text-[11px] font-extrabold tracking-wider uppercase transition-all shadow-xs ${
+                isAllStores
+                  ? 'bg-amber-400 text-black border border-amber-300 ring-2 ring-amber-400/60 shadow-md brightness-110'
+                  : currentScreen === 2
+                    ? 'bg-[#d8d8d8] text-[#555] border border-[#bfbfbf] hover:bg-[#cecece] hover:text-black'
+                    : 'bg-[#2a2a2a] text-[#888] border border-[#3a3a3a] hover:bg-[#333] hover:text-[#bbb]'
+              }`}
+              title="Manage inventory for all three stores together"
+            >
+              ALL STORES
+            </button>
+          </div>
         </div>
       </div>
     </header>
