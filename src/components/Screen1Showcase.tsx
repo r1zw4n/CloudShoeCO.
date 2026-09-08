@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { ShoeModelId } from '../types';
-import { SHOE_MODELS } from '../data/inventoryData';
+import { SHOE_MODELS, STORE_MANAGERS } from '../data/inventoryData';
 import { ShoeIllustration } from './ShoeIllustration';
-import { Tag, Sparkles, ArrowRight, Eye, Info } from 'lucide-react';
+import { Tag, ArrowRight, Eye, Calendar, Clock, Phone, Factory, Store } from 'lucide-react';
 
 interface Screen1ShowcaseProps {
   onNavigateToScreen2: (modelFilter?: ShoeModelId) => void;
@@ -24,18 +24,22 @@ export const Screen1Showcase: React.FC<Screen1ShowcaseProps> = ({ onNavigateToSc
 
   return (
     <section className="space-y-6 pb-12">
-      {/* Introduction banner */}
-      <div className="rounded-2xl border border-[#2a2a2a] bg-[#111111] p-5 shadow-xs">
-        <div className="flex items-start gap-3">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#333] bg-[#161616] text-white">
-            <Info className="h-5 w-5" />
-          </div>
+      {/* Company Description banner */}
+      <div className="rounded-2xl border border-[#2a2a2a] bg-[#111111] p-5 sm:p-6 shadow-xs">
+        <div className="space-y-2">
           <div>
             <h2 className="text-xl font-serif italic tracking-wide text-white sm:text-2xl">
-              Screen 1: Product Showcase
+              Cloud Shoe Co.
             </h2>
-            <p className="mt-1 text-sm text-[#888] sm:text-base">
-              Two core footwear lines for CLOUDShoeCo. <strong className="text-[#ccc]">Click or tap on any shoe photo</strong> below to reveal its product category.
+            <p className="mt-1 text-sm text-[#bbb] sm:text-base leading-relaxed italic font-serif">
+              “Step into the Clouds — Engineered for Everyday Comfort and Elevated Performance.”
+            </p>
+          </div>
+
+          <div className="border-t border-[#222] pt-2">
+            <p className="text-xs sm:text-sm text-[#888] leading-relaxed">
+              <strong className="text-white uppercase tracking-wider text-[11px] mr-1.5">Mission:</strong>
+              To empower every step through revolutionary comfort, ergonomic support, and accessible modern craftsmanship for all lifestyles.
             </p>
           </div>
         </div>
@@ -90,41 +94,25 @@ export const Screen1Showcase: React.FC<Screen1ShowcaseProps> = ({ onNavigateToSc
                 </div>
 
                 {/* Category Reveal Section */}
-                <div className="mt-4 min-h-[90px]">
-                  {isRevealed ? (
-                    <div
-                      id={`category-revealed-${shoe.id.toLowerCase()}`}
-                      className="rounded-xl border border-[#333333] bg-[#161616] p-4 transition-all"
-                    >
-                      <div className="flex items-center gap-2">
-                        <Tag className="h-3.5 w-3.5 text-[#aaa]" />
-                        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#aaa]">
-                          Product Category
-                        </span>
-                      </div>
-                      <p className="mt-1 text-lg font-serif italic text-white sm:text-xl">
-                        {shoe.category}
-                      </p>
-                      <p className="mt-1 text-xs text-[#888] leading-relaxed">
-                        {shoe.description}
-                      </p>
+                {isRevealed && (
+                  <div
+                    id={`category-revealed-${shoe.id.toLowerCase()}`}
+                    className="mt-4 rounded-xl border border-[#333333] bg-[#161616] p-4 transition-all"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Tag className="h-3.5 w-3.5 text-[#aaa]" />
+                      <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#aaa]">
+                        Product Category
+                      </span>
                     </div>
-                  ) : (
-                    <div
-                      id={`category-prompt-${shoe.id.toLowerCase()}`}
-                      onClick={() => toggleCategoryReveal(shoe.id)}
-                      className="cursor-pointer rounded-xl border border-dashed border-[#262626] bg-[#0d0d0d] p-4 text-center transition-colors hover:border-[#444]"
-                    >
-                      <Sparkles className="mx-auto h-5 w-5 text-[#555]" />
-                      <p className="mt-1 text-xs font-semibold text-[#aaa]">
-                        Category hidden
-                      </p>
-                      <p className="text-[11px] text-[#666]">
-                        Tap the photo above to view category details
-                      </p>
-                    </div>
-                  )}
-                </div>
+                    <p className="mt-1 text-lg font-serif italic text-white sm:text-xl">
+                      {shoe.category}
+                    </p>
+                    <p className="mt-1 text-xs text-[#888] leading-relaxed">
+                      {shoe.description}
+                    </p>
+                  </div>
+                )}
 
                 {/* Technical specs summary */}
                 <div className="mt-4 border-t border-[#222222] pt-3">
@@ -149,6 +137,83 @@ export const Screen1Showcase: React.FC<Screen1ShowcaseProps> = ({ onNavigateToSc
             </div>
           );
         })}
+      </div>
+
+      {/* Maintenance & Contacts Section */}
+      <div
+        id="tab-operational-update"
+        className="rounded-2xl border border-[#2a2a2a] bg-[#111111] p-5 sm:p-6 shadow-xs"
+      >
+        {/* Scheduled Maintenance Card */}
+        <div className="rounded-xl border border-[#262626] bg-[#0d0d0d] p-4">
+          <div className="flex items-center gap-2 text-white">
+            <Calendar className="h-4 w-4 text-amber-400" />
+            <span className="text-xs font-bold uppercase tracking-wider text-white">
+              Scheduled Maintenance
+            </span>
+          </div>
+          <div className="mt-2 grid grid-cols-1 gap-2.5 sm:grid-cols-2 text-xs">
+            <div className="flex items-center gap-2 text-[#ccc]">
+              <Clock className="h-3.5 w-3.5 text-[#888]" />
+              <span>
+                <strong className="text-white">Day & Time:</strong> Sunday, September 13, 2026 | 02:00 AM – 05:00 AM SGT
+              </span>
+            </div>
+            <div className="text-[#888]">
+              <span className="text-amber-400/90 font-medium">System Impact:</span> Database sync & cloud optimization. Store terminals will run in cached local mode.
+            </div>
+          </div>
+        </div>
+
+        {/* Store & Factory Contacts Grid */}
+        <div className="mt-5">
+          <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#888] mb-3">
+            Operational Contacts (Stores & Factory)
+          </h4>
+
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {/* Store Contacts */}
+            {STORE_MANAGERS.map((mgr) => (
+              <div
+                key={mgr.store}
+                id={`contact-store-${mgr.store.toLowerCase()}`}
+                className="rounded-xl border border-[#222] bg-[#161616] p-3.5 transition-all hover:border-[#333]"
+              >
+                <div className="flex items-center gap-2 text-white">
+                  <Store className="h-3.5 w-3.5 text-[#aaa]" />
+                  <span className="text-xs font-serif italic font-bold">{mgr.store} Store</span>
+                </div>
+                <p className="mt-1 text-xs text-[#bbb] font-medium">{mgr.name}</p>
+                <p className="text-[10px] uppercase tracking-wider text-[#666]">{mgr.role}</p>
+                <div className="mt-2.5 flex items-center gap-1.5 text-xs text-white">
+                  <Phone className="h-3 w-3 text-[#888]" />
+                  <span className="text-[#ddd]">
+                    {mgr.contactNumber}
+                  </span>
+                </div>
+              </div>
+            ))}
+
+            {/* Factory Contact */}
+            <div
+              id="contact-factory-jurong"
+              className="rounded-xl border border-[#222] bg-[#161616] p-3.5 transition-all hover:border-[#333]"
+            >
+              <div className="flex items-center gap-2 text-white">
+                <Factory className="h-3.5 w-3.5 text-blue-400" />
+                <span className="text-xs font-serif italic font-bold">Jurong Factory</span>
+              </div>
+              <p className="mt-1 text-xs text-[#bbb] font-medium">David Koh</p>
+              <p className="text-[10px] uppercase tracking-wider text-[#666]">Production & Logistics Hub</p>
+              <div className="mt-2.5 flex items-center gap-1.5 text-xs text-white">
+                <Phone className="h-3 w-3 text-[#888]" />
+                <span className="text-[#ddd]">
+                  +65 6899 xxxx
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -9,19 +9,19 @@ export const STORE_MANAGERS: StoreManager[] = [
     store: 'Bugis',
     name: 'Marcus Chen',
     role: 'Store Manager – Bugis Junction',
-    contactNumber: '+65 6338 1201',
+    contactNumber: '+65 6338 xxxx',
   },
   {
     store: 'Jewel',
     name: 'Sarah Tan',
     role: 'Store Manager – Jewel Changi',
-    contactNumber: '+65 6214 9812',
+    contactNumber: '+65 6214 xxxx',
   },
   {
     store: 'Takashimaya',
     name: 'Priya Sharma',
     role: 'Store Manager – Ngee Ann City',
-    contactNumber: '+65 6735 5543',
+    contactNumber: '+65 6735 xxxx',
   },
 ];
 
