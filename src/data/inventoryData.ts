@@ -41,7 +41,7 @@ export const SHOE_MODELS: ShoeModelInfo[] = [
     id: 'CloudRUN',
     name: 'CloudRUN',
     category: 'Running and Sports',
-    tagline: 'High-rebound propulsion and structural support for distance runners',
+    tagline: 'High-rebound propulsion and structural support for Athletes',
     description: 'Equipped with dual-density energy return pods, carbon-reinforced speedboard, and reinforced heel lockdown for athletic endurance and daily runs.',
     accentColor: '#ea580c', // athletic orange
     badgeBg: 'bg-orange-50',
