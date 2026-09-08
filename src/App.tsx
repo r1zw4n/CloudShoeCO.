@@ -112,7 +112,7 @@ export default function App() {
                 : 'bg-[#161616] text-[#888] border border-[#262626]'
             }`}
           >
-            <span>Stocks & Orders</span>
+            <span>Stocks</span>
             {lowStockCount > 0 && (
               <span className="text-[10px]">({lowStockCount} low)</span>
             )}

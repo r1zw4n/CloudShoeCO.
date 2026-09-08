@@ -112,7 +112,7 @@ export const Header: React.FC<HeaderProps> = ({
             }}
           >
             <ClipboardList className="h-4 w-4 shrink-0" />
-            <span className="whitespace-nowrap">Stocks & Orders</span>
+            <span className="whitespace-nowrap">Stocks</span>
             {lowStockCount > 0 && (
               <span
                 className={`ml-1 rounded-full px-2 py-0.5 text-[10px] font-bold tracking-normal shrink-0 ${
