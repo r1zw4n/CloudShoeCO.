@@ -25,7 +25,10 @@ export const Header: React.FC<HeaderProps> = ({
   const currentManager = STORE_MANAGERS.find((m) => m.store === selectedStore) || STORE_MANAGERS[0];
 
   return (
-    <header className="sticky top-0 z-30 border-b border-[#2a2a2a] bg-[#111111]/95 backdrop-blur-md">
+    <header
+      className="sticky top-0 z-30 border-b border-[#2a2a2a] bg-[#111111]/95 backdrop-blur-md"
+      style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
+    >
       <div className="mx-auto max-w-4xl px-4 py-3 sm:px-6">
         {/* Brand and Manager Bar */}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

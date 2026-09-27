@@ -4,6 +4,7 @@ import { INITIAL_INVENTORY_ITEMS } from './data/inventoryData';
 import { Header } from './components/Header';
 import { Screen1Showcase } from './components/Screen1Showcase';
 import { Screen2Inventory } from './components/Screen2Inventory';
+import { InstallPromptBanner } from './components/InstallPromptBanner';
 
 export default function App() {
   // Screen 1: Product Showcase, Screen 2: Inventory & Orders
@@ -77,7 +78,10 @@ export default function App() {
       />
 
       {/* Main Screen Content Area */}
-      <main className="mx-auto max-w-4xl px-4 py-6 sm:px-6">
+      <main
+        className="mx-auto max-w-4xl px-4 py-6 sm:px-6"
+        style={{ paddingBottom: 'calc(4.5rem + env(safe-area-inset-bottom, 0px))' }}
+      >
         {currentScreen === 1 ? (
           <Screen1Showcase onNavigateToScreen2={handleNavigateToScreen2} />
         ) : (
@@ -91,8 +95,14 @@ export default function App() {
         )}
       </main>
 
+      {/* Dismissible Install App Banner (shown above bottom nav) */}
+      <InstallPromptBanner />
+
       {/* Mobile Floating Bottom Bar for Quick Navigation */}
-      <div className="fixed bottom-0 inset-x-0 z-20 border-t border-[#2a2a2a] bg-[#111111]/95 px-4 py-2 sm:hidden backdrop-blur-md">
+      <div
+        className="fixed bottom-0 inset-x-0 z-20 border-t border-[#2a2a2a] bg-[#111111]/95 px-4 pt-2 sm:hidden backdrop-blur-md"
+        style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom, 0px))' }}
+      >
         <div className="flex items-center justify-between gap-2">
           <button
             onClick={() => setCurrentScreen(1)}
